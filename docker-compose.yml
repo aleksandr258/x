@@ -1,0 +1,20 @@
+services:
+  x-nft-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: x-nft-monitor
+    restart: unless-stopped
+    stop_grace_period: 20s
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      SQLITE_DB_PATH: /app/data/monitor.db
+    volumes:
+      - ./data:/app/data
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
